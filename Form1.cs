@@ -139,14 +139,101 @@ namespace Mandelbrot
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
         private static bool action, rectangle, finished;
 
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Mouse down");
+            xs = e.X;
+            ys = e.Y;
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+
+            Console.WriteLine("Mouse up");
+            int z, w;
+
+            //e.consume();
+            if (action)
+            {
+                xe = e.X;
+                ye = e.Y;
+                if (xs > xe)
+                {
+                    z = xs;
+                    xs = xe;
+                    xe = z;
+                }
+                if (ys > ye)
+                {
+                    z = ys;
+                    ys = ye;
+                    ye = z;
+                }
+                w = (xe - xs);
+                z = (ye - ys);
+                if ((w < 2) && (z < 2)) initvalues();
+                else
+                {
+                    if (((float)w > (float)z * xy)) ye = (int)((float)ys + (float)w / xy);
+                    else xe = (int)((float)xs + (float)z * xy);
+                    xende = xstart + xzoom * (double)xe;
+                    yende = ystart + yzoom * (double)ye;
+                    xstart += xzoom * (double)xs;
+                    ystart += yzoom * (double)ys;
+                }
+                xzoom = (xende - xstart) / (double)x1;
+                yzoom = (yende - ystart) / (double)y1;
+                mandelbrot();
+                rectangle = false;
+                //repaint();
+            }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (MouseButtons.Left == MouseButtons)
+            {
+
+                Console.WriteLine("This should appear when you drag the mouse! ");
+
+
+                //e.consume();
+                if (action)
+                {
+                    xe = e.X;
+                    ye = e.Y;
+                    rectangle = true;
+                    //repaint();
+                    Refresh();
+                }
+            }
+        }
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(picture, 0, 0);
+
+            if (rectangle)
+            {
+                Pen pen = new Pen(Color.White, 1);
+                if (xs < xe)
+                {
+                    if (ys < ye) g.DrawRectangle(pen, xs, ys, (xe - xs), (ye - ys));
+                    else g.DrawRectangle(pen, xs, ye, (xe - xs), (ys - ye));
+                }
+                else
+                {
+                    if (ys < ye) g.DrawRectangle(pen, xe, ys, (xs - xe), (ye - ys));
+                    else g.DrawRectangle(pen, xe, ye, (xs - xe), (ys - ye));
+                }
+            }
         }
 
         private static float xy;
         private Image picture;
+        private Image rectangleImage;
+
         private Graphics g1;
         private Cursor c1, c2;
 
