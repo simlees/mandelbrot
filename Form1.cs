@@ -126,7 +126,7 @@ namespace Mandelbrot
                         (int)Math.Round(Math.Min(Math.Max(r, 0), 255)),
                         (int)Math.Round(Math.Min(Math.Max(g, 0), 255)),
                         (int)Math.Round(Math.Min(Math.Max(b, 0), 255))
-                        );
+                    );
             }
         }
 
@@ -185,7 +185,8 @@ namespace Mandelbrot
                 yzoom = (yende - ystart) / (double)y1;
                 mandelbrot();
                 rectangle = false;
-                //repaint();
+
+                Refresh();
             }
         }
 
@@ -307,6 +308,7 @@ namespace Mandelbrot
             //setCursor(c2);
             action = true;
         }
+
         private float pointcolour(double xwert, double ywert) // color value from 0.0 to 1.0 by iterations
         {
             double r = 0.0, i = 0.0, m = 0.0;
