@@ -210,6 +210,27 @@ namespace Mandelbrot
             }
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Form1().Show();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            x1 = Size.Width;
+            y1 = Size.Height;
+            // Need to do some more here
+            
+           
+        }
+
+        // Add change colour functionality?
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -229,6 +250,7 @@ namespace Mandelbrot
                     else g.DrawRectangle(pen, xe, ye, (xs - xe), (ys - ye));
                 }
             }
+            
         }
 
         private static float xy;
@@ -241,6 +263,10 @@ namespace Mandelbrot
         public Form1()
         {
             InitializeComponent();
+
+            // Changes form control style to complete painting in buffer then output to screen
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+
             init();
             start();
         }
@@ -273,6 +299,8 @@ namespace Mandelbrot
         {
             int x, y;
             float h, b, alt = 0.0f;
+            
+
             Pen pen = new Pen(Color.Black, 1);
 
 
@@ -285,15 +313,16 @@ namespace Mandelbrot
                 for (y = 0; y < y1; y++)
                 {
                     h = pointcolour(xstart + xzoom * (double)x, ystart + yzoom * (double)y); // color value
+                    
                     if (h != alt)
                     {
                         b = 1.0f - h * h; // brightnes
                                           ///djm added
                                           ///
 
-                        HSBColor hsb = new HSBColor(h * 255, 0.8f * 255, b * 255);
+                        HSBColor hsb = new HSBColor((h * 255 + 0), 0.8f * 255, b * 255);
 
-                        //Pen p = new Pen(hsb.Color, 1);
+                        Pen p = new Pen(hsb.Color, 1);
 
                         pen.Color = hsb.Color;
 
