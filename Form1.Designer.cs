@@ -35,7 +35,11 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hueSlider = new System.Windows.Forms.TrackBar();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hueSliderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hueSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // statusTextBox
@@ -49,6 +53,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -92,11 +97,38 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // hueSlider
+            // 
+            this.hueSlider.Location = new System.Drawing.Point(13, 359);
+            this.hueSlider.Maximum = 255;
+            this.hueSlider.Name = "hueSlider";
+            this.hueSlider.Size = new System.Drawing.Size(599, 45);
+            this.hueSlider.TabIndex = 2;
+            this.hueSlider.Visible = false;
+            this.hueSlider.ValueChanged += new System.EventHandler(this.hueSlider_ValueChanged);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hueSliderToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // hueSliderToolStripMenuItem
+            // 
+            this.hueSliderToolStripMenuItem.CheckOnClick = true;
+            this.hueSliderToolStripMenuItem.Name = "hueSliderToolStripMenuItem";
+            this.hueSliderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hueSliderToolStripMenuItem.Text = "Hue Slider";
+            this.hueSliderToolStripMenuItem.Click += new System.EventHandler(this.hueSliderToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 442);
+            this.Controls.Add(this.hueSlider);
             this.Controls.Add(this.statusTextBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -109,6 +141,7 @@
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hueSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,6 +156,9 @@
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.TrackBar hueSlider;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hueSliderToolStripMenuItem;
     }
 }
 

@@ -135,9 +135,9 @@ namespace Mandelbrot
         private const double SY = -1.125; // start value imaginary
         private const double EX = 0.6;    // end value real
         private const double EY = 1.125;  // end value imaginary
-        private static int x1, y1, xs, ys, xe, ye;
+        private static int x1, y1, xs, ys, xe, ye, hueDifference;
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
-        private static bool action, rectangle, finished;
+        private static bool action, rectangle, finished, hueSliderShowing;
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -183,7 +183,7 @@ namespace Mandelbrot
                 }
                 xzoom = (xende - xstart) / (double)x1;
                 yzoom = (yende - ystart) / (double)y1;
-                mandelbrot();
+                mandelbrot(hueDifference);
                 rectangle = false;
 
                 Refresh();
@@ -218,6 +218,28 @@ namespace Mandelbrot
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Form1().Show();
+        }
+
+        private void hueSlider_ValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("Changed");
+            hueDifference = hueSlider.Value;
+            mandelbrot(hueDifference);
+            Refresh();
+        }
+
+        private void hueSliderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!hueSliderShowing)
+            {
+                hueSlider.Visible = true;
+                hueSliderShowing = true;
+            }
+            else
+            {
+                hueSlider.Visible = false;
+                hueSliderShowing = false;
+            }
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -279,10 +301,12 @@ namespace Mandelbrot
             //c2 = new Cursor(Cursor.CROSSHAIR_CURSOR);
             x1 = Size.Width;
             y1 = Size.Height;
+            hueDifference = 0;
             xy = (float)x1 / (float)y1;
             picture = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(picture);
             finished = true;
+            hueSliderShowing = false;
         }
 
         public void start()
@@ -292,10 +316,10 @@ namespace Mandelbrot
             initvalues();
             xzoom = (xende - xstart) / (double)x1;
             yzoom = (yende - ystart) / (double)y1;
-            mandelbrot();
+            mandelbrot(hueDifference);
         }
 
-        private void mandelbrot() // calculate all points
+        private void mandelbrot(int hueDifference) // calculate all points
         {
             int x, y;
             float h, b, alt = 0.0f;
@@ -305,7 +329,7 @@ namespace Mandelbrot
 
 
             action = false;
-            //setCursor(c1);
+            this.Cursor = Cursors.WaitCursor;
             statusTextBox.Text = "Mandelbrot-Set will be produced - please wait...";
 
 
@@ -320,7 +344,7 @@ namespace Mandelbrot
                                           ///djm added
                                           ///
 
-                        HSBColor hsb = new HSBColor((h * 255 + 0), 0.8f * 255, b * 255);
+                        HSBColor hsb = new HSBColor((h * 255 + hueDifference), 0.8f * 255, b * 255);
 
                         Pen p = new Pen(hsb.Color, 1);
 
@@ -334,7 +358,7 @@ namespace Mandelbrot
                     g1.DrawLine(pen, x, y, x + 1, y);
                 }
             statusTextBox.Text = "Mandelbrot-Set ready - please select zoom area with pressed mouse.";
-            //setCursor(c2);
+            this.Cursor = Cursors.Cross;
             action = true;
         }
 
