@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,7 +138,7 @@ namespace Mandelbrot
         private const double EY = 1.125;  // end value imaginary
         private static int x1, y1, xs, ys, xe, ye, hueDifference;
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
-        private static bool action, rectangle, finished, hueSliderShowing;
+        private static bool action, rectangle, finished, hueSliderShowing, statusBarShowing;
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -222,10 +223,39 @@ namespace Mandelbrot
 
         private void hueSlider_ValueChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("Changed");
             hueDifference = hueSlider.Value;
             mandelbrot(hueDifference);
             Refresh();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "JPEG (*.jpg)|*.jpg";
+            dialog.DefaultExt = "jpg";
+            dialog.AddExtension = true;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                int width = Convert.ToInt32(picture.Width);
+                int height = Convert.ToInt32(picture.Height);
+                Bitmap bitmap = new Bitmap(width, height);
+                this.DrawToBitmap(bitmap, new Rectangle(0, 0, width, height));
+                picture.Save(dialog.FileName, ImageFormat.Jpeg);
+            }
+        }
+
+        private void statusBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!statusBarShowing)
+            {
+                statusTextBox.Visible = true;
+                statusBarShowing = true;
+            }
+            else
+            {
+                statusTextBox.Visible = false;
+                statusBarShowing = false;
+            }
         }
 
         private void hueSliderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -247,8 +277,12 @@ namespace Mandelbrot
             x1 = Size.Width;
             y1 = Size.Height;
             // Need to do some more here
-            
-           
+
+            picture = new Bitmap(x1, y1);
+            g1 = Graphics.FromImage(picture);
+
+            mandelbrot(hueDifference);
+            Refresh();
         }
 
         // Add change colour functionality?
@@ -306,6 +340,7 @@ namespace Mandelbrot
             picture = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(picture);
             finished = true;
+            statusBarShowing = true;
             hueSliderShowing = false;
         }
 
@@ -371,7 +406,7 @@ namespace Mandelbrot
             {
                 j++;
                 m = r * r - i * i;
-                i = 2.0 * r * i + ywert;
+                i = 2 * r * i + ywert;
                 r = m + xwert;
             }
             return (float)j / (float)MAX;
