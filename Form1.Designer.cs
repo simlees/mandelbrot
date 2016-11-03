@@ -34,10 +34,10 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hueSlider = new System.Windows.Forms.TrackBar();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hueSliderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hueSlider = new System.Windows.Forms.TrackBar();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hueSlider)).BeginInit();
             this.SuspendLayout();
@@ -76,35 +76,23 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // newWindowToolStripMenuItem
             // 
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.newWindowToolStripMenuItem.Text = "New Window";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // hueSlider
-            // 
-            this.hueSlider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hueSlider.Location = new System.Drawing.Point(13, 359);
-            this.hueSlider.Maximum = 255;
-            this.hueSlider.Name = "hueSlider";
-            this.hueSlider.Size = new System.Drawing.Size(599, 45);
-            this.hueSlider.TabIndex = 2;
-            this.hueSlider.Visible = false;
-            this.hueSlider.ValueChanged += new System.EventHandler(this.hueSlider_ValueChanged);
             // 
             // viewToolStripMenuItem
             // 
@@ -119,7 +107,7 @@
             // 
             this.hueSliderToolStripMenuItem.CheckOnClick = true;
             this.hueSliderToolStripMenuItem.Name = "hueSliderToolStripMenuItem";
-            this.hueSliderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hueSliderToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.hueSliderToolStripMenuItem.Text = "Hue Slider";
             this.hueSliderToolStripMenuItem.Click += new System.EventHandler(this.hueSliderToolStripMenuItem_Click);
             // 
@@ -129,9 +117,21 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.statusBarToolStripMenuItem.Text = "Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.statusBarToolStripMenuItem_Click);
+            // 
+            // hueSlider
+            // 
+            this.hueSlider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hueSlider.Location = new System.Drawing.Point(13, 359);
+            this.hueSlider.Maximum = 255;
+            this.hueSlider.Name = "hueSlider";
+            this.hueSlider.Size = new System.Drawing.Size(599, 45);
+            this.hueSlider.TabIndex = 2;
+            this.hueSlider.Visible = false;
+            this.hueSlider.ValueChanged += new System.EventHandler(this.hueSlider_ValueChanged);
             // 
             // Form1
             // 
@@ -144,6 +144,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);

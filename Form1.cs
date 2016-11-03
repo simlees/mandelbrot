@@ -142,7 +142,6 @@ namespace Mandelbrot
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse down");
             xs = e.X;
             ys = e.Y;
         }
@@ -150,7 +149,6 @@ namespace Mandelbrot
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
 
-            Console.WriteLine("Mouse up");
             int z, w;
 
             //e.consume();
@@ -244,39 +242,30 @@ namespace Mandelbrot
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            settings.formWidth = Size.Width;
+            settings.formHeight = Size.Height;
+
+            settings.Save();
+        }
+
         private void statusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!statusBarShowing)
-            {
-                statusTextBox.Visible = true;
-                statusBarShowing = true;
-            }
-            else
-            {
-                statusTextBox.Visible = false;
-                statusBarShowing = false;
-            }
+            statusTextBox.Visible = settings.statusBarShowing = settings.statusBarShowing ? false : true;
+            settings.Save();
         }
 
         private void hueSliderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!hueSliderShowing)
-            {
-                hueSlider.Visible = true;
-                hueSliderShowing = true;
-            }
-            else
-            {
-                hueSlider.Visible = false;
-                hueSliderShowing = false;
-            }
+            hueSlider.Visible = settings.hueSliderShowing = settings.hueSliderShowing ? false : true;
+            settings.Save();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             x1 = Size.Width;
             y1 = Size.Height;
-            // Need to do some more here
 
             picture = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(picture);
@@ -284,8 +273,6 @@ namespace Mandelbrot
             mandelbrot(hueDifference);
             Refresh();
         }
-
-        // Add change colour functionality?
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -311,14 +298,21 @@ namespace Mandelbrot
 
         private static float xy;
         private Image picture;
-        private Image rectangleImage;
 
         private Graphics g1;
-        private Cursor c1, c2;
+        Properties.Settings settings;
 
         public Form1()
         {
             InitializeComponent();
+            settings = Properties.Settings.Default;
+
+            // Sets window size to settings values
+            this.Size = new Size(settings.formWidth, settings.formHeight);
+
+            statusTextBox.Visible = statusBarToolStripMenuItem.Checked = settings.statusBarShowing ? true : false;
+            hueSlider.Visible = hueSliderToolStripMenuItem.Checked = settings.hueSliderShowing ? true : false;
+
 
             // Changes form control style to complete painting in buffer then output to screen
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
@@ -331,8 +325,6 @@ namespace Mandelbrot
         {
 
             finished = false;
-            //c1 = new Cursor(Cursor.WAIT_CURSOR);
-            //c2 = new Cursor(Cursor.CROSSHAIR_CURSOR);
             x1 = Size.Width;
             y1 = Size.Height;
             hueDifference = 0;
@@ -340,8 +332,6 @@ namespace Mandelbrot
             picture = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(picture);
             finished = true;
-            statusBarShowing = true;
-            hueSliderShowing = false;
         }
 
         public void start()
