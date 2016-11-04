@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -138,7 +139,7 @@ namespace Mandelbrot
         private const double EY = 1.125;  // end value imaginary
         private static int x1, y1, xs, ys, xe, ye, hueDifference;
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
-        private static bool action, rectangle, finished, hueSliderShowing, statusBarShowing;
+        private static bool action, rectangle, finished, hueSliderShowing, statusBarShowing, colorCycling;
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -242,6 +243,59 @@ namespace Mandelbrot
             }
         }
 
+        private void colorCycleTimer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("Ticking...");
+            
+            
+
+            //Bitmap clone = new Bitmap(picture.Width, picture.Height,
+            //    System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
+
+            //using (var ms = new MemoryStream())
+            //{
+            //    try
+            //    {
+            //        picture.Save(ms, ImageFormat.Gif);
+            //        ms.Position = 0;
+            //        picture = Image.FromStream(ms);
+            //    } catch
+            //    {
+
+            //    }
+                
+            //}
+
+                       
+            //ColorPalette palette = picture.Palette;
+
+            //Color first = palette.Entries[0];
+            //for (int i = 0; i < (palette.Entries.Length - 1); i++)
+            //{
+            //    palette.Entries[i] = palette.Entries[i + 1];
+            //}
+            //palette.Entries[(palette.Entries.Length - 1)] = first;
+
+            Refresh();
+        }
+
+
+        private void startColorCyclingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!colorCycling)
+            {
+                colorCycleTimer.Start();
+                startColorCyclingToolStripMenuItem.Text = "Stop Color Cycling";
+                colorCycling = true;
+            }
+            else
+            {
+                colorCycleTimer.Stop();
+                startColorCyclingToolStripMenuItem.Text = "Start Color Cycling";
+                colorCycling = false;
+            }
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             settings.formWidth = Size.Width;
@@ -310,6 +364,8 @@ namespace Mandelbrot
             // Sets window size to settings values
             this.Size = new Size(settings.formWidth, settings.formHeight);
 
+            
+
             statusTextBox.Visible = statusBarToolStripMenuItem.Checked = settings.statusBarShowing ? true : false;
             hueSlider.Visible = hueSliderToolStripMenuItem.Checked = settings.hueSliderShowing ? true : false;
 
@@ -319,12 +375,15 @@ namespace Mandelbrot
 
             init();
             start();
+
+
+            // Xstart, Xzoom, Ystart, Yzoom need initializing from settings
         }
 
         public void init() // all instances will be prepared
         {
 
-            finished = false;
+            finished = colorCycling = false;
             x1 = Size.Width;
             y1 = Size.Height;
             hueDifference = 0;

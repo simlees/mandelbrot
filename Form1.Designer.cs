@@ -28,16 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.statusTextBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startColorCyclingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hueSliderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hueSlider = new System.Windows.Forms.TrackBar();
+            this.colorCycleTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hueSlider)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +60,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.animationToolStripMenuItem,
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -93,6 +98,21 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // animationToolStripMenuItem
+            // 
+            this.animationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startColorCyclingToolStripMenuItem});
+            this.animationToolStripMenuItem.Name = "animationToolStripMenuItem";
+            this.animationToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.animationToolStripMenuItem.Text = "Animation";
+            // 
+            // startColorCyclingToolStripMenuItem
+            // 
+            this.startColorCyclingToolStripMenuItem.Name = "startColorCyclingToolStripMenuItem";
+            this.startColorCyclingToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.startColorCyclingToolStripMenuItem.Text = "Start Color Cycling";
+            this.startColorCyclingToolStripMenuItem.Click += new System.EventHandler(this.startColorCyclingToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -133,6 +153,10 @@
             this.hueSlider.Visible = false;
             this.hueSlider.ValueChanged += new System.EventHandler(this.hueSlider_ValueChanged);
             // 
+            // colorCycleTimer
+            // 
+            this.colorCycleTimer.Tick += new System.EventHandler(this.colorCycleTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,6 +194,9 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hueSliderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem statusBarToolStripMenuItem;
+        private System.Windows.Forms.Timer colorCycleTimer;
+        private System.Windows.Forms.ToolStripMenuItem animationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startColorCyclingToolStripMenuItem;
     }
 }
 
