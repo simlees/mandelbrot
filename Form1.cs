@@ -151,8 +151,7 @@ namespace Mandelbrot
         {
 
             int z, w;
-
-            //e.consume();
+            
             if (action)
             {
                 xe = e.X;
@@ -194,17 +193,11 @@ namespace Mandelbrot
         {
             if (MouseButtons.Left == MouseButtons)
             {
-
-                Console.WriteLine("This should appear when you drag the mouse! ");
-
-
-                //e.consume();
                 if (action)
                 {
                     xe = e.X;
                     ye = e.Y;
                     rectangle = true;
-                    //repaint();
                     Refresh();
                 }
             }
@@ -300,6 +293,10 @@ namespace Mandelbrot
         {
             settings.formWidth = Size.Width;
             settings.formHeight = Size.Height;
+            settings.xStart = xstart;
+            settings.yStart = ystart;
+            settings.xZoom = xzoom;
+            settings.yZoom = yzoom;
 
             settings.Save();
         }
@@ -376,8 +373,7 @@ namespace Mandelbrot
             init();
             start();
 
-
-            // Xstart, Xzoom, Ystart, Yzoom need initializing from settings
+            
         }
 
         public void init() // all instances will be prepared
@@ -398,8 +394,10 @@ namespace Mandelbrot
             action = false;
             rectangle = false;
             initvalues();
-            xzoom = (xende - xstart) / (double)x1;
-            yzoom = (yende - ystart) / (double)y1;
+            xzoom = settings.xZoom;
+            yzoom = settings.yZoom;
+            xstart = settings.xStart;
+            ystart = settings.yStart;
             mandelbrot(hueDifference);
         }
 
